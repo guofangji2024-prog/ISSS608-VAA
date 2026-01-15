@@ -1,6 +1,14 @@
 ---
-title: "Hands-on-ex1"
+title: "Hands-on Exercise 1"
 author: "Guofang Ji"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-tools: true
+    css: styles.css
 ---
 
 # Getting Started
@@ -57,7 +65,7 @@ The elements of Grammar of Graphics are as follows.
 
 -   **Facets** split the data into subsets to create multiple variations of the same graph (paneling, multiple plots).
 
--   **Statistics**, statiscal transformations that summarise data (e.g. mean, confidence intervals).
+-   **Statistics**, statiscal transformations that summarise data (e.g. mean, confidence intervals).
 
 -   **Coordinate systems** define the plane on which data are mapped on the graphic.
 

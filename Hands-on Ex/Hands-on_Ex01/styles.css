@@ -1,0 +1,204 @@
+/* 自定义样式 - 增强设计感 */
+:root {
+  --primary-color: #6366f1;
+  --secondary-color: #8b5cf6;
+  --accent-color: #ec4899;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-light: #f9fafb;
+  --border-color: #e5e7eb;
+}
+
+/* 主标题样式 */
+.quarto-title-block .title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quarto-title-block .subtitle {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 0;
+}
+
+/* 章节标题样式 */
+h1 {
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 0.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+h2 {
+  color: var(--secondary-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--secondary-color);
+}
+
+h3 {
+  color: var(--text-primary);
+  margin-top: 1.5rem;
+  font-weight: 600;
+}
+
+/* 代码块样式 */
+pre {
+  background: #1e293b;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+code {
+  color: #1e293b;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre code {
+  background: transparent;
+  color: #e2e8f0;
+}
+
+/* 列表样式 */
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin: 0.5rem 0;
+  line-height: 1.7;
+}
+
+/* 强调文本 */
+strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* 链接样式 */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: var(--secondary-color);
+  border-bottom-color: var(--secondary-color);
+}
+
+/* 内容区域 */
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* 面板标签页样式 */
+.panel-tabset {
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 图表容器 */
+.cell-output-display {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--bg-light);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* 引用块样式 */
+blockquote {
+  border-left: 4px solid var(--accent-color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+  background: var(--bg-light);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+/* 表格样式 */
+table {
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+tr:hover {
+  background: var(--bg-light);
+}
+
+/* Callout 样式 */
+.callout {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.callout-note {
+  background: #eff6ff;
+  border-left-color: #3b82f6;
+}
+
+.callout-tip {
+  background: #f0fdf4;
+  border-left-color: #22c55e;
+}
+
+.callout-important {
+  background: #fef3c7;
+  border-left-color: #f59e0b;
+}
+
+.callout-warning {
+  background: #fef2f2;
+  border-left-color: #ef4444;
+}
+
+.callout-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1em;
+}
+
