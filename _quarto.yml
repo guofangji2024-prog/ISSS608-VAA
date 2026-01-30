@@ -10,7 +10,11 @@ website:
           - text: "Hands-on Exercise 1"
             href: "Hands-on Ex/Hands-on_Ex01/Hand-on_Ex1.html"
           - text: "Hands-on Exercise 2"
-            href: "Hands-on Ex/Hands-on_Ex02/hand-on-ex.html"
+            href: "Hands-on Ex/Hands-on_Ex02/hand-on-ex2.html"
+          - text: "Hands-on Exercise 3-A"
+            href: "Hands-on Ex/Hands-on_Ex03/Hand-on_Ex3.html"
+          - text: "Hands-on Exercise 3-B"
+            href: "Hands-on Ex/Hands-on_Ex03/Hand-on_Ex3.2.html"
 
     right:
       - text: Home

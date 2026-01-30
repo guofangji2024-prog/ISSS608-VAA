@@ -8,7 +8,6 @@ format:
     toc-depth: 3
     code-fold: false
     code-tools: true
-    css: styles.css
 ---
 
 # Getting Started
@@ -218,7 +217,7 @@ ggplot(data=exam_data,
 
 # Working with stat
 
-## **Working with stat - the *stat_summary()* method**
+## Working with stat - the *stat_summary()* method
 
 The code chunk below adds mean values by using [`stat_summary()`](https://ggplot2.tidyverse.org/reference/stat_summary.html) function and overriding the default geom.
 
@@ -232,7 +231,7 @@ ggplot(data=exam_data,
                size= 4)
 ```
 
-## **Working with stat - the `geom()` method**
+## Working with stat - the `geom()` method
 
 The code chunk below adding mean values by using `geom_()` function and overriding the default stat.
 
@@ -269,7 +268,7 @@ ggplot(data= exam_data,
 
 # Working with facets
 
-## **Working with `facet_wrap()`**
+## Working with `facet_wrap()`
 
 [`facet_wrap`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) wraps a 1d sequence of panels into 2d. This is generally a better use of screen space than facet_grid because most displays are roughly rectangular. The code chunk below plots a trellis plot using `facet-wrap()`.
 
