@@ -11,10 +11,18 @@ website:
             href: "Hands-on Ex/Hands-on_Ex01/Hand-on_Ex1.html"
           - text: "Hands-on Exercise 2"
             href: "Hands-on Ex/Hands-on_Ex02/hand-on-ex2.html"
-          - text: "Hands-on Exercise 3-A"
+          - text: "Hands-on Exercise 3.1"
             href: "Hands-on Ex/Hands-on_Ex03/Hand-on_Ex3.html"
-          - text: "Hands-on Exercise 3-B"
+          - text: "Hands-on Exercise 3.2"
             href: "Hands-on Ex/Hands-on_Ex03/Hand-on_Ex3.2.html"
+          - text: "Hands-on Exercise 4.1"
+            href: "Hands-on Ex/Hands-on_Ex04/hand-on_Ex4.1.html"
+          - text: "Hands-on Exercise 4.2"
+            href: "Hands-on Ex/Hands-on_Ex04/hand-on_Ex4.2.html"
+          - text: "Hands-on Exercise 4.3"
+            href: "Hands-on Ex/Hands-on_Ex04/hand-on_Ex4.3.html"
+          - text: "Hands-on Exercise 4.4"
+            href: "Hands-on Ex/Hands-on_Ex04/hand-on_Ex4.4.html"
 
     right:
       - text: Home
