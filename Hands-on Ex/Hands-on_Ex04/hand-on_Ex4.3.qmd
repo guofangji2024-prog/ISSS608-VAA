@@ -91,7 +91,7 @@ knitr::kable(head(my_sum), format = 'html')
 
 Standard error bars of mean maths score by race are plotted as follows.
 
-:::: panel-tabset
+::: panel-tabset
 ## The plot
 
 ```{r}
@@ -139,13 +139,13 @@ ggplot(my_sum) +
 ```
 
 The error bars use the formula mean ± se; `geom_point()` uses *stat="identity"*.
-::::
+:::
 
 ### Plotting confidence interval of point estimates
 
 Instead of plotting the standard error bar of point estimates, we can also plot the confidence intervals of mean maths score by race.
 
-:::: panel-tabset
+::: panel-tabset
 ## The plot
 
 ```{r}
@@ -195,7 +195,7 @@ ggplot(my_sum) +
 ```
 
 The confidence intervals use mean ± 1.96×se; the error bars are sorted by mean maths score; `labs()` sets the x-axis label.
-::::
+:::
 
 ### Visualizing the uncertainty of point estimates with interactive error bars
 
