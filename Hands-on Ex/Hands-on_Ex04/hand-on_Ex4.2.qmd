@@ -22,14 +22,12 @@ This hands-on exercise uses:
 
 ## Visual Statistical Analysis with **ggstatsplot**
 
-[**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) ![](chap10/img/image1.jpg){width="47" height="49"} is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
+[**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/index.html) is an extension of [**ggplot2**](https://ggplot2.tidyverse.org/) package for creating graphics with details from statistical tests included in the information-rich plots themselves.
 
 ```         
 -   To provide alternative statistical inference methods by default.
 -   To follow best practices for statistical reporting. For all statistical tests reported in the plots, the default template abides by the [APA](https://my.ilstu.edu/~jhkahn/apastats.html) gold standard for statistical reporting. For example, here are results from a robust t-test:
 ```
-
-![](chap10/img/image2.jpg)
 
 ## Getting Started
 
@@ -76,15 +74,11 @@ Default information: - statistical details - Bayes Factor - sample sizes - distr
 
 -   When we are comparing two hypotheses, H1 (the alternate hypothesis) and H0 (the null hypothesis), the Bayes Factor is often written as B10. It can be defined mathematically as
 
-![](chap10/img/image5.jpg)
-
 -   The [**Schwarz criterion**](https://www.statisticshowto.com/bayesian-information-criterion/) is one of the easiest ways to calculate rough approximation of the Bayes Factor.
 
 ### How to interpret Bayes Factor
 
 A **Bayes Factor** can be any positive number. One of the most common interpretations is this one---first proposed by Harold Jeffereys (1961) and slightly modified by [Lee and Wagenmakers](https://www-tandfonline-com.libproxy.smu.edu.sg/doi/pdf/10.1080/00031305.1999.10474443?needAccess=true) in 2013:
-
-![](chap10/img/image6.jpg){width="480"}
 
 ### Two-sample mean test: *ggbetweenstats()*
 
@@ -125,12 +119,6 @@ ggbetweenstats(
 -   "all" → everything
 
 #### ggbetweenstats - Summary of tests
-
-![](chap10/img/image7.jpg)
-
-![](chap10/img/image8.jpg)
-
-![](chap10/img/image9.jpg)
 
 ### Significant Test of Correlation: *ggscatterstats()*
 
