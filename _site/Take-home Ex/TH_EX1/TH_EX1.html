@@ -301,22 +301,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Upload for elsiver.xlsx"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">na_if</span>(., <span class="st">""</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">any_of</span>(<span class="fu">c</span>(<span class="st">"CPRO"</span>, <span class="st">"CGEN"</span>, <span class="st">"CRAC"</span>, <span class="st">"CJOB"</span>, <span class="st">"CQUI"</span>, <span class="st">"FEDU"</span>, <span class="st">"FVTP"</span>, <span class="st">"FCRA"</span>, <span class="st">"FTAP"</span>)), as.character)) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.finite</span>(TEIN))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>survey</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.finite</span>(TEIN)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CGEN =</span> <span class="fu">factor</span>(CGEN, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>survey</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 724 × 30
    CPRO  CGEN  CRAC  CJOB  CQUI   TEIN  TAIN  TSII  TOIN FEDU  FVTP  FCRA  FTAP 
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
- 1 1     1     2     1     3        37    25     7     5 1     1     1     1    
- 2 1     1     2     1     5        25    22     0     3 0     1     2     1    
- 3 1     2     2     3     3        33    25     0     8 1     1     1     2    
- 4 1     1     2     1     3        35    30     5     0 1     1     1     &lt;NA&gt; 
- 5 1     2     2     1     3        36    28     0     8 0     1     1     2    
- 6 1     2     2     &lt;NA&gt;  4        21    17     0     4 0     1     1     2    
- 7 1     1     2     3     1        35    25     0    10 3     2     1     2    
- 8 1     1     2     1     3        36    28     0     8 0     1     1     2    
- 9 1     1     2     3     3        38    26    12     0 2     2     1     2    
-10 1     1     2     1     3        30    22     2     6 0     1     1     2    
+   &lt;chr&gt; &lt;fct&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 1     Male  2     1     3        37    25     7     5 1     1     1     1    
+ 2 1     Male  2     1     5        25    22     0     3 0     1     2     1    
+ 3 1     Fema… 2     3     3        33    25     0     8 1     1     1     2    
+ 4 1     Male  2     1     3        35    30     5     0 1     1     1     &lt;NA&gt; 
+ 5 1     Fema… 2     1     3        36    28     0     8 0     1     1     2    
+ 6 1     Fema… 2     &lt;NA&gt;  4        21    17     0     4 0     1     1     2    
+ 7 1     Male  2     3     1        35    25     0    10 3     2     1     2    
+ 8 1     Male  2     1     3        36    28     0     8 0     1     1     2    
+ 9 1     Male  2     3     3        38    26    12     0 2     2     1     2    
+10 1     Male  2     1     3        30    22     2     6 0     1     1     2    
 # ℹ 714 more rows
 # ℹ 17 more variables: LHO1 &lt;dbl&gt;, LHO2 &lt;dbl&gt;, LHO3 &lt;dbl&gt;, LHO4 &lt;dbl&gt;,
 #   LCRE &lt;dbl&gt;, LSAV &lt;dbl&gt;, LWDA &lt;dbl&gt;, PPO1 &lt;dbl&gt;, PPO2 &lt;dbl&gt;, PPO3 &lt;dbl&gt;,
@@ -324,8 +325,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #   ARO5 &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see the article Table 1 for the full list). Categorical variables are stored as codes (e.g.&nbsp;1, 2 for gender; 1–5 for province) in the data; the article or codebook gives the mapping to labels (e.g.&nbsp;Male/Female, province names).</p>
+<p>One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see Mai et al.&nbsp;2021, Table 1, for the full codebook).</p>
 <ul>
+<li><strong>Label mapping</strong>: Gender (CGEN) is explicitly mapped for plots: 1 = Male, 2 = Female.</li>
+<li><strong>Education (FEDU)</strong> is coded as in the article: 0 = no formal education, 1 = primary education, 2 = secondary education, 3 = higher education; NA = missing. This coding is used in the education-level figures and write-ups below.</li>
 <li>The <strong>characteristics</strong> are: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), and CQUI (income quintile).</li>
 <li>The <strong>income</strong> variables (scale, in Mil VND) are: TEIN (total income), TAIN (agricultural income), TSII (service and industrial income), and TOIN (others).</li>
 <li>The <strong>factors</strong> are: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), and FTAP (technological application).</li>
@@ -469,7 +472,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="mean-total-income-by-education-level" class="level3">
 <h3 class="anchored" data-anchor-id="mean-total-income-by-education-level">Mean total income by education level</h3>
-<p>For pre-summarised data we use <a href="https://ggplot2.tidyverse.org/reference/geom_col.html"><code>geom_col()</code></a>. The code chunk below plots mean total income by education level. Bars are ordered by mean income using <code>fct_reorder()</code> and the chart is flipped to horizontal using <code>coord_flip()</code>.</p>
+<p>For pre-summarised data we use <a href="https://ggplot2.tidyverse.org/reference/geom_col.html"><code>geom_col()</code></a>. The code chunk below plots mean total income by education level (FEDU: 0 = no formal, 1 = primary, 2 = secondary, 3 = higher; NA = missing). Bars are ordered by mean income using <code>fct_reorder()</code> and the chart is flipped to horizontal using <code>coord_flip()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> by_edu,</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(<span class="fu">as.character</span>(FEDU), mean_tein),</span>
@@ -1126,228 +1129,231 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>survey <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Upload for elsiver.xlsx"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character), <span class="sc">~</span> <span class="fu">na_if</span>(., <span class="st">""</span>))) <span class="sc">%&gt;%</span></span>
 <span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">any_of</span>(<span class="fu">c</span>(<span class="st">"CPRO"</span>, <span class="st">"CGEN"</span>, <span class="st">"CRAC"</span>, <span class="st">"CJOB"</span>, <span class="st">"CQUI"</span>, <span class="st">"FEDU"</span>, <span class="st">"FVTP"</span>, <span class="st">"FCRA"</span>, <span class="st">"FTAP"</span>)), as.character)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.finite</span>(TEIN))</span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>survey</span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a>One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see the article Table 1 for the full list). Categorical variables are stored as codes (e.g. 1, 2 for gender; 1–5 for province) in the data; the article or codebook gives the mapping to labels (e.g. Male/Female, province names).</span>
-<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **characteristics** are: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), and CQUI (income quintile).</span>
-<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **income** variables (scale, in Mil VND) are: TEIN (total income), TAIN (agricultural income), TSII (service and industrial income), and TOIN (others).</span>
-<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **factors** are: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), and FTAP (technological application).</span>
-<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data preparation</span></span>
-<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a>We keep the data in tidy form. Summary tables for some of the plots are built by using **dplyr** for grouping and summarising.</span>
-<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by province.</span>
-<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-81"><a href="#cb18-81" aria-hidden="true" tabindex="-1"></a>by_province <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
-<span id="cb18-82"><a href="#cb18-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CPRO) <span class="sc">%&gt;%</span></span>
-<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> <span class="fu">mean</span>(TEIN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>by_province</span>
-<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by race.</span>
-<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-96"><a href="#cb18-96" aria-hidden="true" tabindex="-1"></a>by_race <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
-<span id="cb18-97"><a href="#cb18-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(CRAC, <span class="at">name =</span> <span class="st">"count"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> count <span class="sc">/</span> <span class="fu">sum</span>(count) <span class="sc">*</span> <span class="dv">100</span>)</span>
-<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>by_race</span>
-<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by education level.</span>
-<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-107"><a href="#cb18-107" aria-hidden="true" tabindex="-1"></a>by_edu <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
-<span id="cb18-108"><a href="#cb18-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FEDU) <span class="sc">%&gt;%</span></span>
-<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_tein =</span> <span class="fu">mean</span>(TEIN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>by_edu</span>
-<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with Geometric objects</span></span>
-<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a histogram</span></span>
-<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a>Plot a histogram for total income (TEIN).</span>
-<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-126"><a href="#cb18-126" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of total income (Mil VND)"</span></span>
-<span id="cb18-127"><a href="#cb18-127" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN)) <span class="sc">+</span></span>
-<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>,</span>
-<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">"grey25"</span>,</span>
-<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"grey90"</span>) <span class="sc">+</span></span>
-<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of total income of informal rural labourers"</span>) <span class="sc">+</span></span>
-<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>p1</span>
-<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a>The histogram shows that total income (TEIN) in the sample is right-skewed. Most informal labourers have total income between about 20 and 50 million VND; the centre of the distribution lies in this range. The spread is wide, with a long right tail indicating a minority with much higher income. This pattern implies substantial inequality among rural informal workers in the northern mountainous regions: most earn modest amounts, while a smaller group earns considerably more, possibly reflecting different types of informal work or access to better opportunities.</span>
-<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a boxplot</span></span>
-<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income by gender. We use <span class="co">[</span><span class="ot">`geom_boxplot()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)</span> with <span class="in">`notch = TRUE`</span>. The mean value is added by using <span class="co">[</span><span class="ot">`stat_summary()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/stat_summary.html)</span> and overriding the default geom, as in Hands-on Exercise 1.</span>
-<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-146"><a href="#cb18-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income by gender"</span></span>
-<span id="cb18-147"><a href="#cb18-147" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> TEIN, <span class="at">x =</span> CGEN)) <span class="sc">+</span></span>
-<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,</span>
-<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">"mean"</span>,</span>
-<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"red"</span>,</span>
-<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Gender"</span>, <span class="at">y =</span> <span class="st">"Total income (Mil VND)"</span>) <span class="sc">+</span></span>
-<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income by gender"</span>) <span class="sc">+</span></span>
-<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a>p2</span>
-<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a>The boxplots show that median and mean (red point) total income are similar for the two gender groups. The interquartile ranges and overall spread are comparable, and both groups have some upper-end outliers. The notches overlap, suggesting that the median income does not differ significantly between genders in this sample. The gender income gap among these informal rural labourers is therefore not large; any difference is less striking than the variation within each group.</span>
-<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a bar chart</span></span>
-<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a>By default, the bar chart of ggplot2 is in vertical form. The code chunk below uses <span class="co">[</span><span class="ot">`geom_bar()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_bar.html)</span> to count respondents by province, then flips to a horizontal bar chart by using <span class="in">`coord_flip()`</span>, as in Hands-on Exercise 1 (Working with Coordinate).</span>
-<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-170"><a href="#cb18-170" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Number of respondents by province"</span></span>
-<span id="cb18-171"><a href="#cb18-171" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> CPRO)) <span class="sc">+</span></span>
-<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Number of respondents by province"</span>) <span class="sc">+</span></span>
-<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a>p3</span>
-<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>Respondent counts are fairly balanced across the five provinces, with sample sizes ranging from about 141 to 150 per province. This balance supports the representativeness of the survey across the northern mountainous regions and allows comparisons of income and other outcomes by province without one region dominating the overall results. The design appears to aim for similar coverage in each province.</span>
-<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mean total income by education level</span></span>
-<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a>For pre-summarised data we use <span class="co">[</span><span class="ot">`geom_col()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_col.html)</span>. The code chunk below plots mean total income by education level. Bars are ordered by mean income using <span class="in">`fct_reorder()`</span> and the chart is flipped to horizontal using <span class="in">`coord_flip()`</span>.</span>
-<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-190"><a href="#cb18-190" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Mean total income by education level"</span></span>
-<span id="cb18-191"><a href="#cb18-191" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> by_edu,</span>
-<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(<span class="fu">as.character</span>(FEDU), mean_tein),</span>
-<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mean_tein,</span>
-<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="fu">as.character</span>(FEDU))) <span class="sc">+</span></span>
-<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
-<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Mean total income (Mil VND)"</span>) <span class="sc">+</span></span>
-<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mean total income by education level"</span>) <span class="sc">+</span></span>
-<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>p4</span>
-<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>There is a clear positive association between education level and mean total income. Mean income rises from about 29 Mil VND (education level 0) to 43, 60, and about 132 Mil VND for levels 1, 2, and 3 respectively. The highest education category has a much higher mean, indicating that better education is associated with substantially higher income among these informal labourers. Respondents with missing education have a moderate mean (around 37 Mil VND), between the lowest and middle levels. The pattern supports the importance of education for income in this population.</span>
-<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting the kernel estimate density plot</span></span>
-<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income in a kernel density estimate plot. Two density lines are drawn by using *colour* and *fill* arguments of <span class="in">`aes()`</span>, as in Hands-on Exercise 1.</span>
-<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-213"><a href="#cb18-213" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Density of total income by gender"</span></span>
-<span id="cb18-214"><a href="#cb18-214" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN, <span class="at">colour =</span> CGEN, <span class="at">fill =</span> CGEN)) <span class="sc">+</span></span>
-<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total income (Mil VND)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
-<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income distribution by gender"</span>) <span class="sc">+</span></span>
-<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a>p5</span>
-<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a>The two density curves overlap heavily, with peaks in a similar range (roughly 25–45 Mil VND). Spread and shape are similar for both gender groups; there is no strong shift of one distribution relative to the other. The overlap indicates that the income distribution is largely similar for males and females in this sample. Any small differences in peak location or tail length are minor compared with the shared pattern of moderate centre and right-skewed spread.</span>
-<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with facets</span></span>
-<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a><span class="fu">### Working with facet_wrap()</span></span>
-<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`facet_wrap()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/facet_wrap.html)</span> wraps a 1d sequence of panels into 2d. The code chunk below plots a trellis plot using <span class="in">`facet_wrap()`</span> for total income by province.</span>
-<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-234"><a href="#cb18-234" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income distribution by province"</span></span>
-<span id="cb18-235"><a href="#cb18-235" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN)) <span class="sc">+</span></span>
-<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>,</span>
-<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">"grey25"</span>,</span>
-<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"steelblue"</span>,</span>
-<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> CPRO, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total income (Mil VND)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income distribution by province"</span>) <span class="sc">+</span></span>
-<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a>p6</span>
-<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a>The five panels show that income distribution shape and centre vary by province. Provinces 1, 2, 3 and 5 have similar centres (mean income around 38–41 Mil VND), while province 4 has a lower centre (about 33 Mil VND). All panels are right-skewed, but spread and the length of the right tail differ. This suggests regional heterogeneity: one province has notably lower average income, and the shape of the distribution is not identical across provinces, which may reflect different economic structures or labour mix.</span>
-<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a><span class="fu">## Total income by credit accessibility</span></span>
-<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income by credit accessibility in a boxplot. The mean is added by using <span class="in">`stat_summary()`</span>.</span>
-<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-257"><a href="#cb18-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income by credit accessibility"</span></span>
-<span id="cb18-258"><a href="#cb18-258" aria-hidden="true" tabindex="-1"></a>p7 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
-<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> TEIN, <span class="at">x =</span> FCRA)) <span class="sc">+</span></span>
-<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,</span>
-<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">"mean"</span>,</span>
-<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"red"</span>,</span>
-<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Credit accessibility"</span>, <span class="at">y =</span> <span class="st">"Total income (Mil VND)"</span>) <span class="sc">+</span></span>
-<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income by credit accessibility"</span>) <span class="sc">+</span></span>
-<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>p7</span>
-<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>The boxplots show how total income varies across credit accessibility groups. If the red points (means) and medians increase from lower to higher credit access, this suggests that access to credit is associated with higher income in this sample—consistent with credit enabling investment or smoothing consumption. Spread and outliers may differ across groups. The figure allows a visual check of whether the income–credit relationship is monotonic or whether some groups (e.g. middle access) stand out, which can inform further modelling or policy discussion.</span>
-<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating composite graphics: patchwork methods</span></span>
-<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a>We use the ggplot2 extension <span class="co">[</span><span class="ot">**patchwork**</span><span class="co">](https://patchwork.data-imaginist.com/)</span> to combine separate ggplot2 graphs into a single figure. The division sign <span class="in">`/`</span> stacks plots vertically so that each plot has its own row and titles do not overlap. <span class="co">[</span><span class="ot">`plot_annotation()`</span><span class="co">](https://patchwork.data-imaginist.com/reference/plot_annotation.html)</span> with <span class="in">`tag_levels = 'I'`</span> provides panel labels.</span>
-<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-281"><a href="#cb18-281" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Composite: income distribution, by gender, and by education"</span></span>
-<span id="cb18-282"><a href="#cb18-282" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">/</span> p2 <span class="sc">/</span> p4 <span class="sc">+</span></span>
-<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
-<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Income of informal rural labourers: distribution and by gender and education"</span>,</span>
-<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">"I"</span></span>
-<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>Panel I shows the overall income distribution is right-skewed, with most labourers in the lower–middle income range. Panel II indicates that the gender gap in total income is small; medians and means are similar for both groups. Panel III shows a strong education–income gradient: mean income rises sharply with education level. Taken together, the main findings are: (1) income among these informal rural labourers is uneven and right-skewed; (2) gender differences in income are modest; and (3) education is a strong predictor of higher mean income, suggesting that policies supporting education may help improve outcomes in this population.</span>
-<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submission instructions</span></span>
-<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>This is an individual assignment. Work on the take-home exercise and prepare your submission individually.</span>
-<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The analytical visualisations are prepared using R and appropriate R packages (tidyverse, ggplot2 and its extensions). No interactive data visualisation is used.</span>
-<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The write-up is in **Quarto html document format**.</span>
-<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>You are required to **publish the write-up on Netlify**.</span>
-<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Submission date**: The completed take-home exercise is due on **15th February 2026 (Sunday) by 11:59pm**.</span>
-<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
-<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Mai, A.N., Pham, T.H., Hoang, H.T., Nguyen, H.H.T. (2021). Income of informal labourers in rural areas: A survey dataset of northern mountainous regions in Vietnam. *Data in Brief* 38, 107292. <span class="ot">&lt;https://doi.org/10.1016/j.dib.2021.107292&gt;</span></span>
-<span id="cb18-302"><a href="#cb18-302" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Mendeley Data: <span class="ot">&lt;https://data.mendeley.com/datasets/s6p7dwj3j6/1&gt;</span></span>
-<span id="cb18-303"><a href="#cb18-303" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Creating enlightening and truthful data visualization. *Procedia Computer Science* (2021).</span>
-<span id="cb18-304"><a href="#cb18-304" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham et al., *ggplot2: Elegant Graphics for Data Analysis*. Springer.</span>
-<span id="cb18-305"><a href="#cb18-305" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hands-on Exercise 1 and 2, ISSS608 Visual Analytics.</span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.finite</span>(TEIN)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CGEN =</span> <span class="fu">factor</span>(CGEN, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>)))</span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>survey</span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-67"><a href="#cb18-67" aria-hidden="true" tabindex="-1"></a>One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see Mai et al. 2021, Table 1, for the full codebook).</span>
+<span id="cb18-68"><a href="#cb18-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-69"><a href="#cb18-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Label mapping**: Gender (CGEN) is explicitly mapped for plots: 1 = Male, 2 = Female.</span>
+<span id="cb18-70"><a href="#cb18-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Education (FEDU)** is coded as in the article: 0 = no formal education, 1 = primary education, 2 = secondary education, 3 = higher education; NA = missing. This coding is used in the education-level figures and write-ups below.</span>
+<span id="cb18-71"><a href="#cb18-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **characteristics** are: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), and CQUI (income quintile).</span>
+<span id="cb18-72"><a href="#cb18-72" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **income** variables (scale, in Mil VND) are: TEIN (total income), TAIN (agricultural income), TSII (service and industrial income), and TOIN (others).</span>
+<span id="cb18-73"><a href="#cb18-73" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The **factors** are: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), and FTAP (technological application).</span>
+<span id="cb18-74"><a href="#cb18-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-75"><a href="#cb18-75" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data preparation</span></span>
+<span id="cb18-76"><a href="#cb18-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-77"><a href="#cb18-77" aria-hidden="true" tabindex="-1"></a>We keep the data in tidy form. Summary tables for some of the plots are built by using **dplyr** for grouping and summarising.</span>
+<span id="cb18-78"><a href="#cb18-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-79"><a href="#cb18-79" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by province.</span>
+<span id="cb18-80"><a href="#cb18-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-83"><a href="#cb18-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-84"><a href="#cb18-84" aria-hidden="true" tabindex="-1"></a>by_province <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
+<span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(CPRO) <span class="sc">%&gt;%</span></span>
+<span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_income =</span> <span class="fu">mean</span>(TEIN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-91"><a href="#cb18-91" aria-hidden="true" tabindex="-1"></a>by_province</span>
+<span id="cb18-92"><a href="#cb18-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-93"><a href="#cb18-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-94"><a href="#cb18-94" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by race.</span>
+<span id="cb18-95"><a href="#cb18-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-98"><a href="#cb18-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-99"><a href="#cb18-99" aria-hidden="true" tabindex="-1"></a>by_race <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
+<span id="cb18-100"><a href="#cb18-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(CRAC, <span class="at">name =</span> <span class="st">"count"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-101"><a href="#cb18-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> count <span class="sc">/</span> <span class="fu">sum</span>(count) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb18-102"><a href="#cb18-102" aria-hidden="true" tabindex="-1"></a>by_race</span>
+<span id="cb18-103"><a href="#cb18-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-104"><a href="#cb18-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-105"><a href="#cb18-105" aria-hidden="true" tabindex="-1"></a>The code chunk below creates a summary by education level.</span>
+<span id="cb18-106"><a href="#cb18-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-109"><a href="#cb18-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-110"><a href="#cb18-110" aria-hidden="true" tabindex="-1"></a>by_edu <span class="ot">&lt;-</span> survey <span class="sc">%&gt;%</span></span>
+<span id="cb18-111"><a href="#cb18-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(FEDU) <span class="sc">%&gt;%</span></span>
+<span id="cb18-112"><a href="#cb18-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb18-113"><a href="#cb18-113" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb18-114"><a href="#cb18-114" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_tein =</span> <span class="fu">mean</span>(TEIN, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-115"><a href="#cb18-115" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb18-116"><a href="#cb18-116" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-117"><a href="#cb18-117" aria-hidden="true" tabindex="-1"></a>by_edu</span>
+<span id="cb18-118"><a href="#cb18-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-119"><a href="#cb18-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-120"><a href="#cb18-120" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with Geometric objects</span></span>
+<span id="cb18-121"><a href="#cb18-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-122"><a href="#cb18-122" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a histogram</span></span>
+<span id="cb18-123"><a href="#cb18-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-124"><a href="#cb18-124" aria-hidden="true" tabindex="-1"></a>Plot a histogram for total income (TEIN).</span>
+<span id="cb18-125"><a href="#cb18-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-128"><a href="#cb18-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-129"><a href="#cb18-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution of total income (Mil VND)"</span></span>
+<span id="cb18-130"><a href="#cb18-130" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-131"><a href="#cb18-131" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN)) <span class="sc">+</span></span>
+<span id="cb18-132"><a href="#cb18-132" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>,</span>
+<span id="cb18-133"><a href="#cb18-133" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">"grey25"</span>,</span>
+<span id="cb18-134"><a href="#cb18-134" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"grey90"</span>) <span class="sc">+</span></span>
+<span id="cb18-135"><a href="#cb18-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Distribution of total income of informal rural labourers"</span>) <span class="sc">+</span></span>
+<span id="cb18-136"><a href="#cb18-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-137"><a href="#cb18-137" aria-hidden="true" tabindex="-1"></a>p1</span>
+<span id="cb18-138"><a href="#cb18-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-139"><a href="#cb18-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-140"><a href="#cb18-140" aria-hidden="true" tabindex="-1"></a>The histogram shows that total income (TEIN) in the sample is right-skewed. Most informal labourers have total income between about 20 and 50 million VND; the centre of the distribution lies in this range. The spread is wide, with a long right tail indicating a minority with much higher income. This pattern implies substantial inequality among rural informal workers in the northern mountainous regions: most earn modest amounts, while a smaller group earns considerably more, possibly reflecting different types of informal work or access to better opportunities.</span>
+<span id="cb18-141"><a href="#cb18-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-142"><a href="#cb18-142" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a boxplot</span></span>
+<span id="cb18-143"><a href="#cb18-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-144"><a href="#cb18-144" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income by gender. We use <span class="co">[</span><span class="ot">`geom_boxplot()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_boxplot.html)</span> with <span class="in">`notch = TRUE`</span>. The mean value is added by using <span class="co">[</span><span class="ot">`stat_summary()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/stat_summary.html)</span> and overriding the default geom, as in Hands-on Exercise 1.</span>
+<span id="cb18-145"><a href="#cb18-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-148"><a href="#cb18-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-149"><a href="#cb18-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income by gender"</span></span>
+<span id="cb18-150"><a href="#cb18-150" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-151"><a href="#cb18-151" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> TEIN, <span class="at">x =</span> CGEN)) <span class="sc">+</span></span>
+<span id="cb18-152"><a href="#cb18-152" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb18-153"><a href="#cb18-153" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb18-154"><a href="#cb18-154" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">"mean"</span>,</span>
+<span id="cb18-155"><a href="#cb18-155" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"red"</span>,</span>
+<span id="cb18-156"><a href="#cb18-156" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-157"><a href="#cb18-157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Gender"</span>, <span class="at">y =</span> <span class="st">"Total income (Mil VND)"</span>) <span class="sc">+</span></span>
+<span id="cb18-158"><a href="#cb18-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income by gender"</span>) <span class="sc">+</span></span>
+<span id="cb18-159"><a href="#cb18-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-160"><a href="#cb18-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb18-161"><a href="#cb18-161" aria-hidden="true" tabindex="-1"></a>p2</span>
+<span id="cb18-162"><a href="#cb18-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-163"><a href="#cb18-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-164"><a href="#cb18-164" aria-hidden="true" tabindex="-1"></a>The boxplots show that median and mean (red point) total income are similar for the two gender groups. The interquartile ranges and overall spread are comparable, and both groups have some upper-end outliers. The notches overlap, suggesting that the median income does not differ significantly between genders in this sample. The gender income gap among these informal rural labourers is therefore not large; any difference is less striking than the variation within each group.</span>
+<span id="cb18-165"><a href="#cb18-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-166"><a href="#cb18-166" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting a bar chart</span></span>
+<span id="cb18-167"><a href="#cb18-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-168"><a href="#cb18-168" aria-hidden="true" tabindex="-1"></a>By default, the bar chart of ggplot2 is in vertical form. The code chunk below uses <span class="co">[</span><span class="ot">`geom_bar()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_bar.html)</span> to count respondents by province, then flips to a horizontal bar chart by using <span class="in">`coord_flip()`</span>, as in Hands-on Exercise 1 (Working with Coordinate).</span>
+<span id="cb18-169"><a href="#cb18-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-172"><a href="#cb18-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-173"><a href="#cb18-173" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Number of respondents by province"</span></span>
+<span id="cb18-174"><a href="#cb18-174" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-175"><a href="#cb18-175" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> CPRO)) <span class="sc">+</span></span>
+<span id="cb18-176"><a href="#cb18-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb18-177"><a href="#cb18-177" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-178"><a href="#cb18-178" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb18-179"><a href="#cb18-179" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Number of respondents by province"</span>) <span class="sc">+</span></span>
+<span id="cb18-180"><a href="#cb18-180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-181"><a href="#cb18-181" aria-hidden="true" tabindex="-1"></a>p3</span>
+<span id="cb18-182"><a href="#cb18-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-183"><a href="#cb18-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-184"><a href="#cb18-184" aria-hidden="true" tabindex="-1"></a>Respondent counts are fairly balanced across the five provinces, with sample sizes ranging from about 141 to 150 per province. This balance supports the representativeness of the survey across the northern mountainous regions and allows comparisons of income and other outcomes by province without one region dominating the overall results. The design appears to aim for similar coverage in each province.</span>
+<span id="cb18-185"><a href="#cb18-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-186"><a href="#cb18-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mean total income by education level</span></span>
+<span id="cb18-187"><a href="#cb18-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-188"><a href="#cb18-188" aria-hidden="true" tabindex="-1"></a>For pre-summarised data we use <span class="co">[</span><span class="ot">`geom_col()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/geom_col.html)</span>. The code chunk below plots mean total income by education level (FEDU: 0 = no formal, 1 = primary, 2 = secondary, 3 = higher; NA = missing). Bars are ordered by mean income using <span class="in">`fct_reorder()`</span> and the chart is flipped to horizontal using <span class="in">`coord_flip()`</span>.</span>
+<span id="cb18-189"><a href="#cb18-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-192"><a href="#cb18-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-193"><a href="#cb18-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Mean total income by education level"</span></span>
+<span id="cb18-194"><a href="#cb18-194" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> by_edu,</span>
+<span id="cb18-195"><a href="#cb18-195" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(<span class="fu">as.character</span>(FEDU), mean_tein),</span>
+<span id="cb18-196"><a href="#cb18-196" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> mean_tein,</span>
+<span id="cb18-197"><a href="#cb18-197" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="fu">as.character</span>(FEDU))) <span class="sc">+</span></span>
+<span id="cb18-198"><a href="#cb18-198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.85</span>) <span class="sc">+</span></span>
+<span id="cb18-199"><a href="#cb18-199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-200"><a href="#cb18-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Mean total income (Mil VND)"</span>) <span class="sc">+</span></span>
+<span id="cb18-201"><a href="#cb18-201" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mean total income by education level"</span>) <span class="sc">+</span></span>
+<span id="cb18-202"><a href="#cb18-202" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-203"><a href="#cb18-203" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb18-204"><a href="#cb18-204" aria-hidden="true" tabindex="-1"></a>p4</span>
+<span id="cb18-205"><a href="#cb18-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-206"><a href="#cb18-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-207"><a href="#cb18-207" aria-hidden="true" tabindex="-1"></a>There is a clear positive association between education level and mean total income. Mean income rises from about 29 Mil VND (education level 0) to 43, 60, and about 132 Mil VND for levels 1, 2, and 3 respectively. The highest education category has a much higher mean, indicating that better education is associated with substantially higher income among these informal labourers. Respondents with missing education have a moderate mean (around 37 Mil VND), between the lowest and middle levels. The pattern supports the importance of education for income in this population.</span>
+<span id="cb18-208"><a href="#cb18-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-209"><a href="#cb18-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plotting the kernel estimate density plot</span></span>
+<span id="cb18-210"><a href="#cb18-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-211"><a href="#cb18-211" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income in a kernel density estimate plot. Two density lines are drawn by using *colour* and *fill* arguments of <span class="in">`aes()`</span>, as in Hands-on Exercise 1.</span>
+<span id="cb18-212"><a href="#cb18-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-215"><a href="#cb18-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-216"><a href="#cb18-216" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Density of total income by gender"</span></span>
+<span id="cb18-217"><a href="#cb18-217" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-218"><a href="#cb18-218" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN, <span class="at">colour =</span> CGEN, <span class="at">fill =</span> CGEN)) <span class="sc">+</span></span>
+<span id="cb18-219"><a href="#cb18-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">linewidth =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb18-220"><a href="#cb18-220" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total income (Mil VND)"</span>, <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb18-221"><a href="#cb18-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income distribution by gender"</span>) <span class="sc">+</span></span>
+<span id="cb18-222"><a href="#cb18-222" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-223"><a href="#cb18-223" aria-hidden="true" tabindex="-1"></a>p5</span>
+<span id="cb18-224"><a href="#cb18-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-225"><a href="#cb18-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-226"><a href="#cb18-226" aria-hidden="true" tabindex="-1"></a>The two density curves overlap heavily, with peaks in a similar range (roughly 25–45 Mil VND). Spread and shape are similar for both gender groups; there is no strong shift of one distribution relative to the other. The overlap indicates that the income distribution is largely similar for males and females in this sample. Any small differences in peak location or tail length are minor compared with the shared pattern of moderate centre and right-skewed spread.</span>
+<span id="cb18-227"><a href="#cb18-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-228"><a href="#cb18-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with facets</span></span>
+<span id="cb18-229"><a href="#cb18-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-230"><a href="#cb18-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Working with facet_wrap()</span></span>
+<span id="cb18-231"><a href="#cb18-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-232"><a href="#cb18-232" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">`facet_wrap()`</span><span class="co">](https://ggplot2.tidyverse.org/reference/facet_wrap.html)</span> wraps a 1d sequence of panels into 2d. The code chunk below plots a trellis plot using <span class="in">`facet_wrap()`</span> for total income by province.</span>
+<span id="cb18-233"><a href="#cb18-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-236"><a href="#cb18-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-237"><a href="#cb18-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income distribution by province"</span></span>
+<span id="cb18-238"><a href="#cb18-238" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-239"><a href="#cb18-239" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> TEIN)) <span class="sc">+</span></span>
+<span id="cb18-240"><a href="#cb18-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>,</span>
+<span id="cb18-241"><a href="#cb18-241" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">"grey25"</span>,</span>
+<span id="cb18-242"><a href="#cb18-242" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb18-243"><a href="#cb18-243" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb18-244"><a href="#cb18-244" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> CPRO, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-245"><a href="#cb18-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Total income (Mil VND)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb18-246"><a href="#cb18-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income distribution by province"</span>) <span class="sc">+</span></span>
+<span id="cb18-247"><a href="#cb18-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-248"><a href="#cb18-248" aria-hidden="true" tabindex="-1"></a>p6</span>
+<span id="cb18-249"><a href="#cb18-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-250"><a href="#cb18-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-251"><a href="#cb18-251" aria-hidden="true" tabindex="-1"></a>The five panels show that income distribution shape and centre vary by province. Provinces 1, 2, 3 and 5 have similar centres (mean income around 38–41 Mil VND), while province 4 has a lower centre (about 33 Mil VND). All panels are right-skewed, but spread and the length of the right tail differ. This suggests regional heterogeneity: one province has notably lower average income, and the shape of the distribution is not identical across provinces, which may reflect different economic structures or labour mix.</span>
+<span id="cb18-252"><a href="#cb18-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-253"><a href="#cb18-253" aria-hidden="true" tabindex="-1"></a><span class="fu">## Total income by credit accessibility</span></span>
+<span id="cb18-254"><a href="#cb18-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-255"><a href="#cb18-255" aria-hidden="true" tabindex="-1"></a>The code chunk below plots the distribution of total income by credit accessibility in a boxplot. The mean is added by using <span class="in">`stat_summary()`</span>.</span>
+<span id="cb18-256"><a href="#cb18-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-259"><a href="#cb18-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-260"><a href="#cb18-260" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total income by credit accessibility"</span></span>
+<span id="cb18-261"><a href="#cb18-261" aria-hidden="true" tabindex="-1"></a>p7 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> survey,</span>
+<span id="cb18-262"><a href="#cb18-262" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">y =</span> TEIN, <span class="at">x =</span> FCRA)) <span class="sc">+</span></span>
+<span id="cb18-263"><a href="#cb18-263" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-264"><a href="#cb18-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">geom =</span> <span class="st">"point"</span>,</span>
+<span id="cb18-265"><a href="#cb18-265" aria-hidden="true" tabindex="-1"></a>               <span class="at">fun =</span> <span class="st">"mean"</span>,</span>
+<span id="cb18-266"><a href="#cb18-266" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"red"</span>,</span>
+<span id="cb18-267"><a href="#cb18-267" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-268"><a href="#cb18-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Credit accessibility"</span>, <span class="at">y =</span> <span class="st">"Total income (Mil VND)"</span>) <span class="sc">+</span></span>
+<span id="cb18-269"><a href="#cb18-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total income by credit accessibility"</span>) <span class="sc">+</span></span>
+<span id="cb18-270"><a href="#cb18-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-271"><a href="#cb18-271" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb18-272"><a href="#cb18-272" aria-hidden="true" tabindex="-1"></a>p7</span>
+<span id="cb18-273"><a href="#cb18-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-274"><a href="#cb18-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-275"><a href="#cb18-275" aria-hidden="true" tabindex="-1"></a>The boxplots show how total income varies across credit accessibility groups. If the red points (means) and medians increase from lower to higher credit access, this suggests that access to credit is associated with higher income in this sample—consistent with credit enabling investment or smoothing consumption. Spread and outliers may differ across groups. The figure allows a visual check of whether the income–credit relationship is monotonic or whether some groups (e.g. middle access) stand out, which can inform further modelling or policy discussion.</span>
+<span id="cb18-276"><a href="#cb18-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-277"><a href="#cb18-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Creating composite graphics: patchwork methods</span></span>
+<span id="cb18-278"><a href="#cb18-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-279"><a href="#cb18-279" aria-hidden="true" tabindex="-1"></a>We use the ggplot2 extension <span class="co">[</span><span class="ot">**patchwork**</span><span class="co">](https://patchwork.data-imaginist.com/)</span> to combine separate ggplot2 graphs into a single figure. The division sign <span class="in">`/`</span> stacks plots vertically so that each plot has its own row and titles do not overlap. <span class="co">[</span><span class="ot">`plot_annotation()`</span><span class="co">](https://patchwork.data-imaginist.com/reference/plot_annotation.html)</span> with <span class="in">`tag_levels = 'I'`</span> provides panel labels.</span>
+<span id="cb18-280"><a href="#cb18-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-283"><a href="#cb18-283" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-284"><a href="#cb18-284" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Composite: income distribution, by gender, and by education"</span></span>
+<span id="cb18-285"><a href="#cb18-285" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">/</span> p2 <span class="sc">/</span> p4 <span class="sc">+</span></span>
+<span id="cb18-286"><a href="#cb18-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(</span>
+<span id="cb18-287"><a href="#cb18-287" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Income of informal rural labourers: distribution and by gender and education"</span>,</span>
+<span id="cb18-288"><a href="#cb18-288" aria-hidden="true" tabindex="-1"></a>    <span class="at">tag_levels =</span> <span class="st">"I"</span></span>
+<span id="cb18-289"><a href="#cb18-289" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb18-290"><a href="#cb18-290" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb18-291"><a href="#cb18-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-292"><a href="#cb18-292" aria-hidden="true" tabindex="-1"></a>Panel I shows the overall income distribution is right-skewed, with most labourers in the lower–middle income range. Panel II indicates that the gender gap in total income is small; medians and means are similar for both groups. Panel III shows a strong education–income gradient: mean income rises sharply with education level. Taken together, the main findings are: (1) income among these informal rural labourers is uneven and right-skewed; (2) gender differences in income are modest; and (3) education is a strong predictor of higher mean income, suggesting that policies supporting education may help improve outcomes in this population.</span>
+<span id="cb18-293"><a href="#cb18-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-294"><a href="#cb18-294" aria-hidden="true" tabindex="-1"></a><span class="fu">## Submission instructions</span></span>
+<span id="cb18-295"><a href="#cb18-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-296"><a href="#cb18-296" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>This is an individual assignment. Work on the take-home exercise and prepare your submission individually.</span>
+<span id="cb18-297"><a href="#cb18-297" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The analytical visualisations are prepared using R and appropriate R packages (tidyverse, ggplot2 and its extensions). No interactive data visualisation is used.</span>
+<span id="cb18-298"><a href="#cb18-298" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The write-up is in **Quarto html document format**.</span>
+<span id="cb18-299"><a href="#cb18-299" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>You are required to **publish the write-up on Netlify**.</span>
+<span id="cb18-300"><a href="#cb18-300" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Submission date**: The completed take-home exercise is due on **15th February 2026 (Sunday) by 11:59pm**.</span>
+<span id="cb18-301"><a href="#cb18-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-302"><a href="#cb18-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb18-303"><a href="#cb18-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-304"><a href="#cb18-304" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Mai, A.N., Pham, T.H., Hoang, H.T., Nguyen, H.H.T. (2021). Income of informal labourers in rural areas: A survey dataset of northern mountainous regions in Vietnam. *Data in Brief* 38, 107292. <span class="ot">&lt;https://doi.org/10.1016/j.dib.2021.107292&gt;</span></span>
+<span id="cb18-305"><a href="#cb18-305" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Mendeley Data: <span class="ot">&lt;https://data.mendeley.com/datasets/s6p7dwj3j6/1&gt;</span></span>
+<span id="cb18-306"><a href="#cb18-306" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Creating enlightening and truthful data visualization. *Procedia Computer Science* (2021).</span>
+<span id="cb18-307"><a href="#cb18-307" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Wickham et al., *ggplot2: Elegant Graphics for Data Analysis*. Springer.</span>
+<span id="cb18-308"><a href="#cb18-308" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Hands-on Exercise 1 and 2, ISSS608 Visual Analytics.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

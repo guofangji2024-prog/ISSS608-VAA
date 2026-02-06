@@ -55,12 +55,15 @@ The code chunk below imports *Upload for elsiver.xlsx* into the R environment by
 survey <- read_excel("data/Upload for elsiver.xlsx") %>%
   mutate(across(where(is.character), ~ na_if(., ""))) %>%
   mutate(across(any_of(c("CPRO", "CGEN", "CRAC", "CJOB", "CQUI", "FEDU", "FVTP", "FCRA", "FTAP")), as.character)) %>%
-  filter(is.finite(TEIN))
+  filter(is.finite(TEIN)) %>%
+  mutate(CGEN = factor(CGEN, levels = c("1", "2"), labels = c("Male", "Female")))
 survey
 ```
 
-One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see the article Table 1 for the full list). Categorical variables are stored as codes (e.g. 1, 2 for gender; 1–5 for province) in the data; the article or codebook gives the mapping to labels (e.g. Male/Female, province names).
+One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see Mai et al. 2021, Table 1, for the full codebook).
 
+-   **Label mapping**: Gender (CGEN) is explicitly mapped for plots: 1 = Male, 2 = Female.
+-   **Education (FEDU)** is coded as in the article: 0 = no formal education, 1 = primary education, 2 = secondary education, 3 = higher education; NA = missing. This coding is used in the education-level figures and write-ups below.
 -   The **characteristics** are: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), and CQUI (income quintile).
 -   The **income** variables (scale, in Mil VND) are: TEIN (total income), TAIN (agricultural income), TSII (service and industrial income), and TOIN (others).
 -   The **factors** are: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), and FTAP (technological application).
@@ -166,7 +169,7 @@ Respondent counts are fairly balanced across the five provinces, with sample siz
 
 ### Mean total income by education level
 
-For pre-summarised data we use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html). The code chunk below plots mean total income by education level. Bars are ordered by mean income using `fct_reorder()` and the chart is flipped to horizontal using `coord_flip()`.
+For pre-summarised data we use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html). The code chunk below plots mean total income by education level (FEDU: 0 = no formal, 1 = primary, 2 = secondary, 3 = higher; NA = missing). Bars are ordered by mean income using `fct_reorder()` and the chart is flipped to horizontal using `coord_flip()`.
 
 ```{r}
 #| fig-cap: "Mean total income by education level"
