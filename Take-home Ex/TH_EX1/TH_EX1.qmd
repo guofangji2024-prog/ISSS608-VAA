@@ -10,69 +10,71 @@ format:
     code-tools: true
 ---
 
-## Overview
+## Introduction
 
-This handout addresses the context, task, expectations and grading criteria of Take-home Exercise 1. Creating *enlightening and truthful* data visualisations involves focusing on accuracy, transparency, and the ability to effectively communicate insights—presenting data in a way that is both informative and aesthetically pleasing so the audience can grasp the information quickly and accurately.
+This report uses the dataset **"Income of informal labourers in rural areas: A survey dataset of northern mountainous regions in Vietnam"** (Mai et al., *Data in Brief* 38, 2021). Survey analysis transforms raw survey data into decision-relevant insights by identifying patterns, trends, and relationships using descriptive and visual methods. The analysis below applies **tidyverse** and **ggplot2** to load, prepare, and visualise the data.
 
-### Setting the scene
+::: callout-note
+## Data source
 
-Survey analysis is the process of transforming raw survey data into decision-relevant insights. It focuses on identifying patterns, trends, and relationships within responses by using descriptive methods (such as counts, percentages, and averages) as well as inferential methods (such as correlations and significance tests) to interpret results and inform decision-making.
+Raw data: spreadsheet (725 rows × 29 columns) from Mendeley Data, stored in the project `data/` folder.
 
-This take-home exercise selects the dataset **"Income of informal labourers in rural areas: A survey dataset of northern mountainous regions in Vietnam"** (Mai et al., *Data in Brief* 38, 2021) and applies visually-driven survey analysis methods to reveal and communicate key observations.
-
-### The task and conventions
-
--   **The task**: Select one of the two survey datasets; apply appropriate, visually-driven survey analysis methods; reveal and communicate at least five and no more than ten key observations.
--   **The designing tool**: Data are processed using the **tidyverse** family of packages. Data visualisation is prepared using **ggplot2** and its extensions. No interactive data visualisation is required.
--   **The write-up**: Include (i) a reproducible description of the procedures used to prepare the analytical visualisations, and (ii) a write-up of no more than 150 words per data visualisation, describing and discussing the patterns revealed by each visualisation.
--   **Deliverable**: At least five and no more than ten key observations, each supported by one data visualisation and its write-up.
-
-::: callout-important
-## Important
-
-**Where to get the data**
-
-The PDF article describes the dataset only; the raw data are not in the PDF. Download the spreadsheet (725 rows × 29 columns) from **Mendeley Data**, save it into the project `data/` folder, and update the file name in the code below if needed.
-
-**Download link**: <https://data.mendeley.com/datasets/s6p7dwj3j6/1> (DOI: 10.17632/s6p7dwj3j6.1)
+**Link**: <https://data.mendeley.com/datasets/s6p7dwj3j6/1> (DOI: 10.17632/s6p7dwj3j6.1)
 :::
 
-## Reproducible procedures
+## Data and methods
 
-The write-up of the take-home exercise includes a reproducible description of the procedures used to prepare the analytical visualisations. The following sections document how the data are loaded, prepared, and visualised so that the analysis can be reproduced.
-
-### Installing and loading R packages
+### Packages and data import
 
 ```{r}
-pacman::p_load(tidyverse, patchwork, scales, readxl)
+pacman::p_load(tidyverse, patchwork, scales, readxl, viridis, ggstatsplot, DT)
 ```
 
-### Importing the data
-
-The code chunk below imports *Upload for elsiver.xlsx* into the R environment by using [`read_excel()`](https://readxl.tidyverse.org/reference/read_excel.html) of the **readxl** package. **readxl** is used here because the dataset is provided in Excel format. Categorical columns are converted to character so that `fct_reorder()` and factor-based plots work correctly when the Excel file stores them as numbers.
+*Upload for elsiver.xlsx* is read with **readxl**’s [`read_excel()`](https://readxl.tidyverse.org/reference/read_excel.html). Categorical columns are converted to character; then **recode** is used so that every chart shows meaningful labels instead of numeric codes (Mai et al. 2021, Table 1).
 
 ```{r}
+# Province codes 1--5: Tuyen Quang, Quang Ninh, Ha Giang, Yen Bai, Bac Giang (Mai et al. 2021)
 survey <- read_excel("data/Upload for elsiver.xlsx") %>%
   mutate(across(where(is.character), ~ na_if(., ""))) %>%
   mutate(across(any_of(c("CPRO", "CGEN", "CRAC", "CJOB", "CQUI", "FEDU", "FVTP", "FCRA", "FTAP")), as.character)) %>%
   filter(is.finite(TEIN)) %>%
-  mutate(CGEN = factor(CGEN, levels = c("1", "2"), labels = c("Male", "Female")))
+  mutate(
+    CGEN = factor(CGEN, levels = c("1", "2"), labels = c("Male", "Female")),
+    CPRO = recode(CPRO,
+                  "1" = "Tuyen Quang", "2" = "Quang Ninh", "3" = "Ha Giang",
+                  "4" = "Yen Bai", "5" = "Bac Giang"),
+    FEDU_label = recode(as.character(FEDU),
+                        "0" = "No formal", "1" = "Primary", "2" = "Secondary",
+                        "3" = "Higher", .default = NA_character_),
+    FCRA = recode(as.character(FCRA),
+                  "1" = "Low", "2" = "Medium", .default = NA_character_),
+    FCRA = fct_relevel(factor(FCRA), "Low", "Medium"),
+    CRAC = factor(recode(as.character(CRAC),
+                        "1" = "Kinh", "2" = "Ethnic minority", .default = NA_character_),
+                  levels = c("Kinh", "Ethnic minority"))
+  )
 survey
 ```
 
-One row with missing or non-finite total income (TEIN) is excluded so that all visualisations use a consistent analytic sample (724 rows). There are a total of 29 columns in the survey tibble. The variables used in this analysis are grouped as follows (see Mai et al. 2021, Table 1, for the full codebook).
+One row with missing or non-finite total income (TEIN) is excluded; the analytic sample has 724 rows and 29 columns. Variables used (see Mai et al. 2021, Table 1 for the full codebook):
 
--   **Label mapping**: Gender (CGEN) is explicitly mapped for plots: 1 = Male, 2 = Female.
--   **Education (FEDU)** is coded as in the article: 0 = no formal education, 1 = primary education, 2 = secondary education, 3 = higher education; NA = missing. This coding is used in the education-level figures and write-ups below.
--   The **characteristics** are: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), and CQUI (income quintile).
--   The **income** variables (scale, in Mil VND) are: TEIN (total income), TAIN (agricultural income), TSII (service and industrial income), and TOIN (others).
--   The **factors** are: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), and FTAP (technological application).
+-   **Characteristics**: CPRO (province), CGEN (gender), CRAC (race), CJOB (career), CQUI (income quintile).
+-   **Income** (Mil VND): TEIN (total income), TAIN (agricultural), TSII (service and industrial), TOIN (others).
+-   **Factors**: FEDU (education), FVTP (vocational training), FCRA (credit accessibility), FTAP (technological application). FCRA has two levels in this dataset (Low / Medium; Mai et al. 2021, Table 1); CRAC (race) is mapped to Kinh / Ethnic minority. All categorical variables use readable labels; FCRA is ordered Low → Medium.
+
+**Data preview** (searchable, sortable table):
+
+```{r}
+#| label: tbl-preview
+#| tbl-cap: "Survey data preview (724 rows)"
+DT::datatable(survey, filter = "top", options = list(pageLength = 10))
+```
 
 ### Data preparation
 
-We keep the data in tidy form. Summary tables for some of the plots are built by using **dplyr** for grouping and summarising.
+Data are kept in tidy form; summary tables are built with **dplyr**.
 
-The code chunk below creates a summary by province.
+Summary by province:
 
 ```{r}
 by_province <- survey %>%
@@ -85,7 +87,7 @@ by_province <- survey %>%
 by_province
 ```
 
-The code chunk below creates a summary by race.
+Summary by race:
 
 ```{r}
 by_race <- survey %>%
@@ -94,111 +96,109 @@ by_race <- survey %>%
 by_race
 ```
 
-The code chunk below creates a summary by education level.
+Summary by education level (with readable labels for plotting):
 
 ```{r}
 by_edu <- survey %>%
-  group_by(FEDU) %>%
+  filter(!is.na(FEDU_label)) %>%
+  group_by(FEDU_label, FEDU) %>%
   summarise(
     n = n(),
     mean_tein = mean(TEIN, na.rm = TRUE),
     .groups = "drop"
-  )
+  ) %>%
+  mutate(FEDU_label = fct_reorder(FEDU_label, mean_tein))
 by_edu
 ```
 
 ## Working with Geometric objects
 
-### Plotting a histogram
-
-Plot a histogram for total income (TEIN).
+### Histogram of total income (TEIN)
 
 ```{r}
 #| fig-cap: "Distribution of total income (Mil VND)"
-p1 <- ggplot(data = survey,
-             aes(x = TEIN)) +
-  geom_histogram(bins = 20,
-                 colour = "grey25",
-                 fill = "grey90") +
-  ggtitle("Distribution of total income of informal rural labourers") +
+p1 <- ggplot(data = survey, aes(x = TEIN)) +
+  geom_histogram(bins = 20, colour = "grey25", fill = "grey85") +
+  labs(title = "Distribution of total income of informal rural labourers",
+       x = "Total income (Mil VND)", y = "Count") +
   theme_minimal()
 p1
 ```
 
 The histogram shows that total income (TEIN) in the sample is right-skewed. Most informal labourers have total income between about 20 and 50 million VND; the centre of the distribution lies in this range. The spread is wide, with a long right tail indicating a minority with much higher income. This pattern implies substantial inequality among rural informal workers in the northern mountainous regions: most earn modest amounts, while a smaller group earns considerably more, possibly reflecting different types of informal work or access to better opportunities.
 
-### Plotting a boxplot
+### Total income by gender (with statistical test)
 
-The code chunk below plots the distribution of total income by gender. We use [`geom_boxplot()`](https://ggplot2.tidyverse.org/reference/geom_boxplot.html) with `notch = TRUE`. The mean value is added by using [`stat_summary()`](https://ggplot2.tidyverse.org/reference/stat_summary.html) and overriding the default geom, as in Hands-on Exercise 1.
+Boxplot with mean (red point); statistical evidence is provided by **ggstatsplot** (non-parametric Mann–Whitney test) so the conclusion is not based on visual overlap alone.
 
 ```{r}
 #| fig-cap: "Total income by gender"
-p2 <- ggplot(data = survey,
-             aes(y = TEIN, x = CGEN)) +
-  geom_boxplot(notch = TRUE) +
-  stat_summary(geom = "point",
-               fun = "mean",
-               colour = "red",
-               size = 4) +
-  labs(x = "Gender", y = "Total income (Mil VND)") +
-  ggtitle("Total income by gender") +
+p2 <- ggplot(data = survey, aes(y = TEIN, x = CGEN)) +
+  geom_boxplot(notch = TRUE, fill = "grey92") +
+  stat_summary(geom = "point", fun = "mean", colour = "red", size = 4) +
+  labs(x = "Gender", y = "Total income (Mil VND)", title = "Total income by gender") +
   theme_minimal() +
   theme(legend.position = "none")
 p2
 ```
 
-The boxplots show that median and mean (red point) total income are similar for the two gender groups. The interquartile ranges and overall spread are comparable, and both groups have some upper-end outliers. The notches overlap, suggesting that the median income does not differ significantly between genders in this sample. The gender income gap among these informal rural labourers is therefore not large; any difference is less striking than the variation within each group.
+```{r}
+#| fig-cap: "Total income by gender — Mann-Whitney test"
+ggbetweenstats(data = survey, x = CGEN, y = TEIN, type = "np",
+               title = "Total income by gender", xlab = "Gender", ylab = "Total income (Mil VND)")
+```
+
+The test confirms that the difference in total income between males and females is not statistically significant (*p* shown in the plot). Medians and distributions are similar; the gender income gap among these informal rural labourers is small relative to variation within each group.
 
 ### Plotting a bar chart
 
-By default, the bar chart of ggplot2 is in vertical form. The code chunk below uses [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) to count respondents by province, then flips to a horizontal bar chart by using `coord_flip()`, as in Hands-on Exercise 1 (Working with Coordinate).
+[`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html) counts respondents by province; `coord_flip()` gives a horizontal bar chart.
 
 ```{r}
 #| fig-cap: "Number of respondents by province"
-p3 <- ggplot(data = survey,
-             aes(x = CPRO)) +
-  geom_bar() +
+p3 <- ggplot(data = survey, aes(x = fct_infreq(CPRO))) +
+  geom_bar(fill = "steelblue", alpha = 0.85) +
   coord_flip() +
-  labs(x = NULL, y = "Count") +
-  ggtitle("Number of respondents by province") +
+  labs(x = NULL, y = "Count", title = "Number of respondents by province") +
   theme_minimal()
 p3
 ```
 
-Respondent counts are fairly balanced across the five provinces, with sample sizes ranging from about 141 to 150 per province. This balance supports the representativeness of the survey across the northern mountainous regions and allows comparisons of income and other outcomes by province without one region dominating the overall results. The design appears to aim for similar coverage in each province.
+Respondent counts are fairly balanced across the five provinces (Tuyen Quang, Quang Ninh, Ha Giang, Yen Bai, Bac Giang), with sample sizes around 141–150 per province. This balance supports comparisons of income and other outcomes by province.
 
 ### Mean total income by education level
 
-For pre-summarised data we use [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html). The code chunk below plots mean total income by education level (FEDU: 0 = no formal, 1 = primary, 2 = secondary, 3 = higher; NA = missing). Bars are ordered by mean income using `fct_reorder()` and the chart is flipped to horizontal using `coord_flip()`.
+Pre-summarised data with [`geom_col()`](https://ggplot2.tidyverse.org/reference/geom_col.html); **viridis** (mako) encodes the gradient; bar-end labels avoid axis alignment.
 
 ```{r}
 #| fig-cap: "Mean total income by education level"
-p4 <- ggplot(data = by_edu,
-             aes(x = fct_reorder(as.character(FEDU), mean_tein),
-                 y = mean_tein,
-                 fill = as.character(FEDU))) +
-  geom_col(alpha = 0.85) +
+p4 <- ggplot(by_edu, aes(x = FEDU_label, y = mean_tein, fill = mean_tein)) +
+  geom_col(alpha = 0.9) +
+  geom_text(aes(label = round(mean_tein, 1)), hjust = -0.2, size = 3.2) +
   coord_flip() +
-  labs(x = NULL, y = "Mean total income (Mil VND)") +
-  ggtitle("Mean total income by education level") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  scale_fill_viridis_c(option = "mako", direction = -1) +
+  labs(
+    title = "Education is the key income driver",
+    subtitle = "Higher education earners make ~4.5× more than those with no formal schooling",
+    x = "Education level", y = "Mean total income (Mil VND)"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 p4
 ```
 
-There is a clear positive association between education level and mean total income. Mean income rises from about 29 Mil VND (education level 0) to 43, 60, and about 132 Mil VND for levels 1, 2, and 3 respectively. The highest education category has a much higher mean, indicating that better education is associated with substantially higher income among these informal labourers. Respondents with missing education have a moderate mean (around 37 Mil VND), between the lowest and middle levels. The pattern supports the importance of education for income in this population.
+There is a clear positive association between education level and mean total income. Mean income rises from about 29 Mil VND (no formal) to 43, 60, and about 132 Mil VND for primary, secondary, and higher education. The highest category earns substantially more, supporting the importance of education for income in this population and suggesting that policies aimed at schooling and training could improve outcomes for informal labourers in the northern mountainous regions.
 
-### Plotting the kernel estimate density plot
+### Kernel density plot
 
-The code chunk below plots the distribution of total income in a kernel density estimate plot. Two density lines are drawn by using *colour* and *fill* arguments of `aes()`, as in Hands-on Exercise 1.
+Kernel density of total income by gender, with *colour* and *fill* in `aes()` for two groups.
 
 ```{r}
 #| fig-cap: "Density of total income by gender"
-p5 <- ggplot(data = survey,
-             aes(x = TEIN, colour = CGEN, fill = CGEN)) +
+p5 <- ggplot(data = survey, aes(x = TEIN, colour = CGEN, fill = CGEN)) +
   geom_density(alpha = 0.3, linewidth = 0.8) +
-  labs(x = "Total income (Mil VND)", y = "Density") +
-  ggtitle("Total income distribution by gender") +
+  labs(x = "Total income (Mil VND)", y = "Density", title = "Total income distribution by gender") +
   theme_minimal()
 p5
 ```
@@ -209,50 +209,77 @@ The two density curves overlap heavily, with peaks in a similar range (roughly 2
 
 ### Working with facet_wrap()
 
-[`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) wraps a 1d sequence of panels into 2d. The code chunk below plots a trellis plot using `facet_wrap()` for total income by province.
+[`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) gives a trellis of total income by province.
 
 ```{r}
 #| fig-cap: "Total income distribution by province"
-p6 <- ggplot(data = survey,
-             aes(x = TEIN)) +
-  geom_histogram(bins = 25,
-                 colour = "grey25",
-                 fill = "steelblue",
-                 alpha = 0.8) +
+p6 <- ggplot(data = survey, aes(x = TEIN)) +
+  geom_histogram(bins = 25, colour = "grey25", fill = "steelblue", alpha = 0.8) +
   facet_wrap(~ CPRO, ncol = 2) +
-  labs(x = "Total income (Mil VND)", y = "Count") +
-  ggtitle("Total income distribution by province") +
+  labs(x = "Total income (Mil VND)", y = "Count", title = "Total income distribution by province") +
   theme_minimal()
 p6
 ```
 
-The five panels show that income distribution shape and centre vary by province. Provinces 1, 2, 3 and 5 have similar centres (mean income around 38–41 Mil VND), while province 4 has a lower centre (about 33 Mil VND). All panels are right-skewed, but spread and the length of the right tail differ. This suggests regional heterogeneity: one province has notably lower average income, and the shape of the distribution is not identical across provinces, which may reflect different economic structures or labour mix.
+The five panels show that income distribution shape and centre vary by province. Tuyen Quang, Quang Ninh, Ha Giang and Bac Giang have similar centres (mean income around 38–41 Mil VND), while **Yen Bai** has a lower centre (about 33 Mil VND). Yen Bai is a well-known mountainous province in northern Vietnam; its terrain may limit non-agricultural development and market access, which aligns with the lower income centre seen in the data. All panels are right-skewed, but spread and right-tail length differ. This regional heterogeneity—and the distinct position of Yen Bai—suggests that geography and local economic structure matter for informal labourers’ income and is a useful direction for further analysis or policy targeting in the northern mountainous regions.
 
 ## Total income by credit accessibility
 
-The code chunk below plots the distribution of total income by credit accessibility in a boxplot. The mean is added by using `stat_summary()`.
+Boxplot of total income by credit accessibility; statistical evidence from **ggstatsplot** (non-parametric test) to support policy-relevant conclusions.
 
 ```{r}
 #| fig-cap: "Total income by credit accessibility"
-p7 <- ggplot(data = survey,
-             aes(y = TEIN, x = FCRA)) +
-  geom_boxplot(notch = FALSE) +
-  stat_summary(geom = "point",
-               fun = "mean",
-               colour = "red",
-               size = 4) +
-  labs(x = "Credit accessibility", y = "Total income (Mil VND)") +
-  ggtitle("Total income by credit accessibility") +
+p7 <- ggplot(data = survey %>% filter(!is.na(FCRA)), aes(y = TEIN, x = FCRA)) +
+  geom_boxplot(notch = FALSE, fill = "grey92") +
+  stat_summary(geom = "point", fun = "mean", colour = "red", size = 4) +
+  labs(x = "Credit accessibility", y = "Total income (Mil VND)", title = "Total income by credit accessibility") +
   theme_minimal() +
   theme(legend.position = "none")
 p7
 ```
 
-The boxplots show how total income varies across credit accessibility groups. If the red points (means) and medians increase from lower to higher credit access, this suggests that access to credit is associated with higher income in this sample—consistent with credit enabling investment or smoothing consumption. Spread and outliers may differ across groups. The figure allows a visual check of whether the income–credit relationship is monotonic or whether some groups (e.g. middle access) stand out, which can inform further modelling or policy discussion.
+```{r}
+#| fig-cap: "Total income by credit accessibility — statistical test"
+ggbetweenstats(
+  data = survey %>% filter(!is.na(FCRA)),
+  x = FCRA, y = TEIN, type = "np",
+  title = "Total income by credit accessibility",
+  xlab = "Credit accessibility", ylab = "Total income (Mil VND)"
+)
+```
 
-## Creating composite graphics: patchwork methods
+The boxplots and test show how total income varies across credit accessibility (Low vs Medium). The *p*-value in the figure indicates whether the difference is statistically significant—relevant for policy: if easier credit access is associated with higher income, interventions to improve credit access may help informal labourers in the northern mountainous regions.
 
-We use the ggplot2 extension [**patchwork**](https://patchwork.data-imaginist.com/) to combine separate ggplot2 graphs into a single figure. The division sign `/` stacks plots vertically so that each plot has its own row and titles do not overlap. [`plot_annotation()`](https://patchwork.data-imaginist.com/reference/plot_annotation.html) with `tag_levels = 'I'` provides panel labels.
+## Total income by race
+
+The sample includes a large share of ethnic minorities (by_race shows \~54% in group 2). In northern mountainous Vietnam, race is a potential driver of income inequality. Below: boxplot and **ggstatsplot** for total income by race (Kinh vs Ethnic minority).
+
+```{r}
+#| fig-cap: "Total income by race"
+p8 <- ggplot(data = survey %>% filter(!is.na(CRAC)), aes(y = TEIN, x = CRAC)) +
+  geom_boxplot(notch = TRUE, fill = "grey92") +
+  stat_summary(geom = "point", fun = "mean", colour = "red", size = 4) +
+  labs(x = "Race", y = "Total income (Mil VND)", title = "Total income by race") +
+  theme_minimal() +
+  theme(legend.position = "none")
+p8
+```
+
+```{r}
+#| fig-cap: "Total income by race — statistical test"
+ggbetweenstats(
+  data = survey %>% filter(!is.na(CRAC)),
+  x = CRAC, y = TEIN, type = "np",
+  title = "Total income by race",
+  xlab = "Race", ylab = "Total income (Mil VND)"
+)
+```
+
+The plot and test show whether total income differs significantly between Kinh and Ethnic minority labourers. In this region, ethnic minority status often correlates with remoteness and limited access to markets and services; a significant income gap would support targeted policies for inclusive development.
+
+## Composite figure (patchwork)
+
+[**patchwork**](https://patchwork.data-imaginist.com/) combines plots; `/` stacks them vertically. [`plot_annotation()`](https://patchwork.data-imaginist.com/reference/plot_annotation.html) with `tag_levels = 'I'` adds panel labels.
 
 ```{r}
 #| fig-cap: "Composite: income distribution, by gender, and by education"
@@ -271,4 +298,3 @@ Panel I shows the overall income distribution is right-skewed, with most laboure
 -   Mendeley Data: <https://data.mendeley.com/datasets/s6p7dwj3j6/1>
 -   Creating enlightening and truthful data visualization. *Procedia Computer Science* (2021).
 -   Wickham et al., *ggplot2: Elegant Graphics for Data Analysis*. Springer.
--   Hands-on Exercise 1 and 2, ISSS608 Visual Analytics.
